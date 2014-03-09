@@ -74,6 +74,8 @@ function showResults ( objects ) {
 
 function formatForView ( objects ) {
 
+  $('#result-notices').text('')
+
   var count;
 
   if( objects[0] === undefined ){
@@ -85,10 +87,9 @@ function formatForView ( objects ) {
     count = objects.length
   }
 
-  var resultCount = $('<p>')
-    .text( 'Results found: ' + count );
+  $('#result-count').text('Results found: ' + count)
 
-  var formattedResults = [resultCount]
+  var formattedResults = []
 
   $.each(objects, function ( i, object ) {
 
@@ -109,6 +110,14 @@ function formatForView ( objects ) {
     result.append(p)
 
     formattedResults.push( result )
+
+
+    // console.log(i)
+
+    if( i >= 100) {
+      $('#result-notices').text('(displaying first 100 entries)')
+      return false;
+    }
 
   })
 

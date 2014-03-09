@@ -8,7 +8,7 @@ $( function () {
 var DataBase = ( function () {
 
   function count () {
-    return {count: $('#data-base-storage').children().length}
+    return { count: $('#data-base-storage').children().length }
   }
 
   function first () {
@@ -57,7 +57,7 @@ var DataBase = ( function () {
   }
 
   return {
-    create: create ,
+    create: create,
     find: find,
     where: where,
     destroy: destroy,

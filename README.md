@@ -14,3 +14,10 @@ Object {
   color: string
 }
 ```
+
+## Todo
+
+* Consider saving data in different HTML doc than UI view
+* Save changes
+* Ability to create new tables
+
