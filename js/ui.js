@@ -1,93 +1,105 @@
 $( function () {
 
-  $('#find').on('submit', function ( e ) {
-    e.preventDefault();
+  // $.get('./data/flowers.html', function (e, response) {
+  //   console.log(e, response)
+  // })
 
-    var value = $('#find-id').val()
+  $('form').on('submit', runDbAction)
+  $('#save-data').on('click', function () {
 
-    var returnVal = DataBase.find( value )
-    showResults( [returnVal] )
+    var data = $('#data-base-storage').html()
+    console.log(data)
 
-    $('#find-id').val('')
+    // uriContent = "data:application/octet-stream," + encodeURIComponent( markup );
+
+    // console.log( uriContent )
+
+    // newWindow=window.open(uriContent, 'neuesDokument');
   })
-
-  $('#where').on('submit', function ( e ) {
-    e.preventDefault();
-
-    var property = $('#where-property').val()
-    var value    = $('#where-value').val()
-
-    var returnVals = DataBase.where( property, value )
-
-    showResults( returnVals )
-
-    $('#where-property').val('')
-    $('#where-value').val('')
-  })
-
-  $('#create').on('submit', function ( e ) {
-    e.preventDefault();
-
-    var color  = $('#create-color-value').val()
-    var leaves = $('#create-leaves-value').val()
-
-    var newEntry = DataBase.create( {color: color, leaves: leaves} )
-
-    showResults( [newEntry] )
-
-    $('#create-color-value').val('')
-    $('#create-leaves-value').val('')
-  })
-
-  $('#destroy').on('submit', function ( e ) {
-    e.preventDefault();
-
-    var value = $('#destroy-id').val()
-
-    var returnVal = DataBase.destroy( value )
-    showResults( [returnVal] )
-
-    $('#destroy-id').val('')
-  })
-
-  $('#other').on('submit', function ( e ) {
-    e.preventDefault();
-
-    var value = $('#other-command').val()
-
-    var returnVal = eval('DataBase.' + value + '()')
-
-    console.log(returnVal)
-
-    showResults( [returnVal] )
-
-    $('#other-command').val('')
-  })
-
 })
+
+
+function runDbAction ( e ) {
+    e.preventDefault();
+
+    var inputValue = $(this).find('input[type=text]')
+
+    var notice;
+    var returnVal;
+
+    switch( e.target.id )
+    {
+
+    case 'create':
+      var color  = inputValue.first().val()
+      var leaves = inputValue.last().val()
+
+      notice = 'New entry created.'
+
+      returnVal = [ DataBase.create( {color: color, leaves: leaves} ) ]
+
+      break;
+
+    case 'find':
+      returnVal = [ DataBase.find( inputValue.val() ) ]
+
+      break;
+
+    case 'where':
+      var property = inputValue.first().val()
+      var value    = inputValue.last().val()
+
+      returnVal = DataBase.where( property, value )
+
+      break;
+
+    case 'destroy':
+      returnVal = [ DataBase.destroy( inputValue.val() ) ]
+
+      notice = 'Entry destroyed.'
+
+      break;
+
+    case 'other':
+      returnVal = [ eval('DataBase.' + inputValue.val() + '()') ]
+
+      break;
+
+    default:
+      displayNotice( 'Query Failed. Check for illegal syntax.' )
+    }
+
+  displayNotice( notice )
+  showResults( returnVal )
+}
+
+function displayNotice ( notice ) {
+
+  if(notice){
+    $('#result-notices').html('Notice: ' + notice)
+  } else {
+    $('#result-notices').html('')
+  }
+}
 
 function showResults ( objects ) {
   var formatedDiv = formatForView( objects )
 
   $('#results').html( formatedDiv )
+
+  clearInputValues()
 }
 
 function formatForView ( objects ) {
 
-  $('#result-notices').text('')
-
-  var count;
-
   if( objects[0] === undefined ){
-    count = 0;
-
-    objects[0] = {notice: 'No Results Found' }
-  } else {
-
-    count = objects.length
+    objects = []
+    displayNotice ('No results found.')
   }
 
-  $('#result-count').text('Results found: ' + count)
+  var count = objects.length
+
+  displayResultsCount( count )
 
   var formattedResults = []
 
@@ -111,15 +123,20 @@ function formatForView ( objects ) {
 
     formattedResults.push( result )
 
-
-    // console.log(i)
-
-    if( i >= 100) {
-      $('#result-notices').text('(displaying first 100 entries)')
+    if( i >= 100 ) {
+      displayNotice('Displaying first 100 entries.')
       return false;
     }
 
   })
 
   return formattedResults
+}
+
+function displayResultsCount ( count ) {
+  $('#result-count').text('Results found: ' + count)
+}
+
+function clearInputValues () {
+    $('#db-actions input[type=text]').val('')
 }

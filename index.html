@@ -25,37 +25,42 @@
   }
   </pre>
 
-  <form id='create'>
-    <strong>Create - </strong>
-    color: <input type='text' id='create-color-value'>
-    leaves: <input type='text' id='create-leaves-value'>
-    <input type='submit'>
-  </form>
+  <p><a href="javaScript:void(0);" id="save-data">Save Data</a></p>
 
-  <form id='find'>
-    <strong>Find - </strong>
-    id: <input type='text' id='find-id'>
-    <input type='submit'>
-  </form>
 
-  <form id='where'>
-    <strong>Where - </strong>
-    property: <input type='text' id='where-property'>
-    value: <input type='text' id='where-value'>
-    <input type='submit'>
-  </form>
+  <div id='db-actions'>
+    <form id='create'>
+      <strong>Create - </strong>
+      color: <input type='text' id='create-color-value'>
+      leaves: <input type='text' id='create-leaves-value'>
+      <input type='submit'>
+    </form>
 
-  <form id='destroy'>
-    <strong>Destroy - </strong>
-    id: <input type='text' id='destroy-id'>
-    <input type='submit'>
-  </form>
+    <form id='find'>
+      <strong>Find - </strong>
+      id: <input type='text' id='find-id'>
+      <input type='submit'>
+    </form>
 
-  <form id='other'>
-    <strong>Other - </strong>
-    command: <input type='text' id='other-command'> (try count, first, or last )
-    <input type='submit'>
-  </form>
+    <form id='where'>
+      <strong>Where - </strong>
+      property: <input type='text' id='where-property'>
+      value: <input type='text' id='where-value'>
+      <input type='submit'>
+    </form>
+
+    <form id='destroy'>
+      <strong>Destroy - </strong>
+      id: <input type='text' id='destroy-id'>
+      <input type='submit'>
+    </form>
+
+    <form id='other'>
+      <strong>Other - </strong>
+      command: <input type='text' id='other-command'> (try count, first, or last )
+      <input type='submit'>
+    </form>
+  </div>
 
   <div id='results-info'>
     <p id='result-count'></p>
@@ -70,7 +75,7 @@
       <div id='data-template' data-color data-leaves data-id></div>
     </div>
 
-<div id="data-base-storage">
+  <div id="data-base-storage">
       <div id="1" data-color="red" data-leaves="6" data-id="1"></div>
       <div id="2" data-color="blue" data-leaves="7" data-id="2"></div>
       <div id="3" data-color="red" data-leaves="8" data-id="3"></div>
